@@ -1,0 +1,631 @@
+# Mihomo 覆写配置：按参考模板补入全局、嗅探、入站与 DNS 设置；保留用户策略组、规则与规则集
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+log-level: info
+keep-alive-idle: 600
+keep-alive-interval: 15
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+external-controller: 0.0.0.0:9090
+secret: ""
+external-ui: ui
+external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack: ["any:53", "tcp://any:53"]
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  cache-algorithm: arc
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.0/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
+    - "+.market.xiaomi.com"
+  default-nameserver:
+    - 223.5.5.5
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+proxy-groups:
+- name: 👽 AI 📞 Voice
+  type: select
+  proxies:
+  - DIRECT
+  - 专线-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - REJECT
+- name: 🔍️ Google 📘 GitHub
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: 📀 流媒体 🙋 Telegram ❎️Twitter
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: 🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: 🍎 Apple
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: 🪟 Microsoft
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: 🎼 TikTok
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: ❇️ Emby
+  type: select
+  proxies:
+  - DIRECT
+  - 专线-自动
+  - 香港-自动
+  - REJECT
+- name: 💬 通讯
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - REJECT
+- name: 🕊️ 迅雷
+  type: select
+  proxies:
+  - DIRECT
+  - 专线-自动
+  - 香港-自动
+  - REJECT
+- name: 🗄️ 群晖
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: 🌍 国外
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: ➡️ 国内
+  type: select
+  proxies:
+  - DIRECT
+  - 所有-自动
+  - 专线-自动
+  - 香港-自动
+  - 台湾-自动
+  - 美国-自动
+  - 日本-自动
+  - 新加坡-自动
+  - 其他-自动
+  - REJECT
+- name: 所有-自动
+  type: url-test
+  include-all: true
+  filter: .*
+  url: http://www.gstatic.com/generate_204
+  interval: 60
+  tolerance: 150
+- name: 专线-自动
+  type: url-test
+  include-all: true
+  filter: (洛杉矶-DC03)
+  url: http://www.gstatic.com/generate_204
+  interval: 60
+  tolerance: 150
+- name: 香港-自动
+  type: url-test
+  include-all: true
+  filter: (广港|香港|HK|Hong Kong|🇭🇰|HongKong)
+  url: http://www.gstatic.com/generate_204
+  interval: 60
+  tolerance: 150
+- name: 台湾-自动
+  type: url-test
+  include-all: true
+  filter: (广台|台湾|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan)
+  url: http://www.gstatic.com/generate_204
+  interval: 60
+  tolerance: 150
+- name: 美国-自动
+  type: url-test
+  include-all: true
+  filter: (广美|美|US|纽约|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇺🇸|United States)
+  url: http://www.gstatic.com/generate_204
+  interval: 60
+  tolerance: 150
+- name: 日本-自动
+  type: url-test
+  include-all: true
+  filter: (广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)
+  url: http://www.gstatic.com/generate_204
+  interval: 60
+  tolerance: 150
+- name: 新加坡-自动
+  type: url-test
+  include-all: true
+  filter: (广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)
+  url: http://www.gstatic.com/generate_204
+  interval: 60
+  tolerance: 150
+- name: 其他-自动
+  type: url-test
+  include-all: true
+  filter: (广韩|韩国|首尔|春川|英国|德国|南非|意大利|法国|加拿大|墨西哥|印度|越南|俄罗斯|澳大利亚|瑞士|瑞典|智利|荷兰|哥伦比亚|巴西|沙特|西班牙|泰国|🇦🇫|🇦🇱|🇩🇿|🇦🇩|🇦🇴|🇦🇬|🇦🇷|🇦🇲|🇦🇺|🇦🇹|🇦🇿|🇧🇸|🇧🇭|🇧🇩|🇧🇧|🇧🇾|🇧🇪|🇧🇿|🇧🇯|🇧🇹|🇧🇴|🇧🇦|🇧🇼|🇧🇷|🇧🇳|🇧🇬|🇧🇫|🇧🇮|🇨🇻|🇰🇭|🇨🇲|🇨🇦|🇨🇫|🇹🇩|🇨🇱|🇨🇴|🇰🇲|🇨🇬|🇨🇩|🇨🇷|🇭🇷|🇨🇺|🇨🇾|🇨🇿|🇩🇰|🇩🇯|🇩🇲|🇩🇴|🇪🇨|🇪🇬|🇸🇻|🇬🇶|🇪🇷|🇪🇪|🇸🇿|🇪🇹|🇫🇯|🇫🇮|🇫🇷|🇬🇦|🇬🇲|🇬🇪|🇩🇪|🇬🇭|🇬🇷|🇬🇩|🇬🇹|🇬🇳|🇬🇼|🇬🇾|🇭🇹|🇭🇳|🇭🇺|🇮🇸|🇮🇳|🇮🇩|🇮🇷|🇮🇶|🇮🇪|🇮🇱|🇮🇹|🇨🇮|🇯🇲|🇯🇴|🇰🇿|🇰🇪|🇰🇮|🇰🇵|🇰🇷|🇰🇼|🇰🇬|🇱🇦|🇱🇻|🇱🇧|🇱🇸|🇱🇷|🇱🇾|🇱🇮|🇱🇹|🇱🇺|🇲🇬|🇲🇼|🇲🇾|🇲🇻|🇲🇱|🇲🇹|🇲🇭|🇲🇷|🇲🇺|🇲🇽|🇫🇲|🇲🇩|🇲🇨|🇲🇳|🇲🇪|🇲🇦|🇲🇿|🇲🇲|🇳🇦|🇳🇷|🇳🇵|🇳🇱|🇳🇿|🇳🇮|🇳🇪|🇳🇬|🇲🇰|🇳🇴|🇴🇲|🇵🇰|🇵🇼|🇵🇦|🇵🇬|🇵🇾|🇵🇪|🇵🇭|🇵🇱|🇵🇹|🇶🇦|🇷🇴|🇷🇺|🇷🇼|🇰🇳|🇱🇨|🇻🇨|🇼🇸|🇸🇲|🇸🇹|🇸🇦|🇸🇳|🇷🇸|🇸🇨|🇸🇱|🇸🇰|🇸🇮|🇸🇧|🇸🇴|🇿🇦|🇸🇸|🇪🇸|🇱🇰|🇸🇩|🇸🇷|🇸🇪|🇨🇭|🇸🇾|🇹🇯|🇹🇿|🇹🇭|🇹🇱|🇹🇬|🇹🇴|🇹🇹|🇹🇳|🇹🇷|🇹🇲|🇹🇻|🇺🇬|🇺🇦|🇦🇪|🇬🇧|🇺🇾|🇺🇿|🇻🇺|🇻🇦|🇻🇪|🇻🇳|🇾🇪|🇿🇲|🇿🇼)
+  url: http://www.gstatic.com/generate_204
+  interval: 60
+  tolerance: 150
+rules:
+  - RULE-SET,GoogleVoice,👽 AI 📞 Voice
+  - RULE-SET,OpenAI,👽 AI 📞 Voice
+  - RULE-SET,Copilot,👽 AI 📞 Voice
+  - RULE-SET,Gemini,👽 AI 📞 Voice
+  - RULE-SET,BardAI,👽 AI 📞 Voice
+  - RULE-SET,Anthropic,👽 AI 📞 Voice
+  - RULE-SET,GitHub,🔍️ Google 📘 GitHub
+  - RULE-SET,Google,🔍️ Google 📘 GitHub
+  - RULE-SET,GoogleEarth,🔍️ Google 📘 GitHub
+  - RULE-SET,GoogleFCM,🔍️ Google 📘 GitHub
+  - RULE-SET,GoogleSearch,🔍️ Google 📘 GitHub
+  - RULE-SET,YouTube,📀 流媒体 🙋 Telegram ❎️Twitter
+  - RULE-SET,Disney,📀 流媒体 🙋 Telegram ❎️Twitter
+  - RULE-SET,Netflix,📀 流媒体 🙋 Telegram ❎️Twitter
+  - RULE-SET,Spotify,📀 流媒体 🙋 Telegram ❎️Twitter
+  - RULE-SET,Telegram,📀 流媒体 🙋 Telegram ❎️Twitter
+  - RULE-SET,Twitter,📀 流媒体 🙋 Telegram ❎️Twitter
+  - RULE-SET,Cloudflare,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,Nvidia,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,Steam,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,Epic,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,Gog,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,Rockstar,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,EA,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,Ubisoft,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,Battle,🎮️ 游戏 📗NVIDIA 🌐Cloudflare
+  - RULE-SET,Apple,🍎 Apple
+  - RULE-SET,AppStore,🍎 Apple
+  - RULE-SET,AppleDaily,🍎 Apple
+  - RULE-SET,AppleDev,🍎 Apple
+  - RULE-SET,AppleFirmware,🍎 Apple
+  - RULE-SET,AppleHardware,🍎 Apple
+  - RULE-SET,AppleID,🍎 Apple
+  - RULE-SET,AppleMail,🍎 Apple
+  - RULE-SET,AppleMedia,🍎 Apple
+  - RULE-SET,AppleMusic,🍎 Apple
+  - RULE-SET,AppleNews,🍎 Apple
+  - RULE-SET,AppleProxy,🍎 Apple
+  - RULE-SET,AppleTV,🍎 Apple
+  - RULE-SET,Microsoft,🪟 Microsoft
+  - RULE-SET,TikTok,🎼 TikTok
+  - RULE-SET,Emby,❇️ Emby
+  - RULE-SET,Line,💬 通讯
+  - RULE-SET,Whatsapp,💬 通讯
+  - RULE-SET,Facebook,💬 通讯
+  - RULE-SET,Instagram,💬 通讯
+  - RULE-SET,Threads,💬 通讯
+  - RULE-SET,Xunlei,🕊️ 迅雷
+  - RULE-SET,Synology,🗄️ 群晖
+  - RULE-SET,LianduProxy,🌍 国外
+  - RULE-SET,Global,🌍 国外
+  - DOMAIN-SUFFIX,fscloud.app,🌍 国外
+  - MATCH,➡️ 国内
+rule-providers:
+  GoogleVoice:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleVoice/GoogleVoice.list
+  OpenAI:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list
+  Copilot:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.list
+  Gemini:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.list
+  BardAI:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BardAI/BardAI.list
+  Anthropic:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Anthropic/Anthropic.list
+  GitHub:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.list
+  Google:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.list
+  GoogleEarth:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleEarth/GoogleEarth.list
+  GoogleFCM:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.list
+  GoogleSearch:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleSearch/GoogleSearch.list
+  YouTube:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list
+  Disney:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.list
+  Netflix:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.list
+  Spotify:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.list
+  Telegram:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list
+  Twitter:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.list
+  Cloudflare:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Cloudflare/Cloudflare.list
+  Nvidia:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nvidia/Nvidia.list
+  Steam:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.list
+  Epic:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list
+  Gog:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gog/Gog.list
+  Rockstar:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Rockstar/Rockstar.list
+  EA:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EA/EA.list
+  Ubisoft:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Ubisoft/Ubisoft.list
+  Battle:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Battle/Battle.list
+  Apple:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list
+  AppStore:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppStore/AppStore.list
+  AppleDaily:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleDaily/AppleDaily.list
+  AppleDev:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleDev/AppleDev.list
+  AppleFirmware:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleFirmware/AppleFirmware.list
+  AppleHardware:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleHardware/AppleHardware.list
+  AppleID:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleID/AppleID.list
+  AppleMail:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleMail/AppleMail.list
+  AppleMedia:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleMedia/AppleMedia.list
+  AppleMusic:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleMusic/AppleMusic.list
+  AppleNews:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleNews/AppleNews.list
+  AppleProxy:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleProxy/AppleProxy.list
+  AppleTV:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleTV/AppleTV.list
+  Microsoft:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list
+  TikTok:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list
+  Emby:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby.list
+  Line:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Line/Line.list
+  Whatsapp:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Whatsapp/Whatsapp.list
+  Facebook:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Facebook/Facebook.list
+  Instagram:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Instagram/Instagram.list
+  Threads:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Threads/Threads.list
+  Xunlei:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Xunlei/Xunlei.list
+  Synology:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Synology/Synology.list
+  LianduProxy:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/Proxy.list
+  Global:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Global/Global.list/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Global/Global.list.list
+
+
