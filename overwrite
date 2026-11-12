@@ -60,20 +60,20 @@ proxy-groups:
 - name: 👽 AI 📞 Voice
   type: select
   proxies:
+  - 美国-自动
   - DIRECT
   - 专线-自动
   - 台湾-自动
-  - 美国-自动
   - 日本-自动
   - 新加坡-自动
   - REJECT
 - name: 🔍️ Google 📘 GitHub
   type: select
   proxies:
+  - 香港-自动
   - DIRECT
   - 所有-自动
   - 专线-自动
-  - 香港-自动
   - 台湾-自动
   - 美国-自动
   - 日本-自动
@@ -83,9 +83,9 @@ proxy-groups:
 - name: 📀 流媒体 🙋 Telegram ❎️Twitter
   type: select
   proxies:
+  - 专线-自动
   - DIRECT
   - 所有-自动
-  - 专线-自动
   - 香港-自动
   - 台湾-自动
   - 美国-自动
@@ -135,60 +135,33 @@ proxy-groups:
 - name: 🎼 TikTok
   type: select
   proxies:
+  - 台湾-自动
   - DIRECT
   - 所有-自动
   - 专线-自动
   - 香港-自动
-  - 台湾-自动
   - 美国-自动
   - 日本-自动
   - 新加坡-自动
   - 其他-自动
-  - REJECT
-- name: ❇️ Emby
-  type: select
-  proxies:
-  - DIRECT
-  - 专线-自动
-  - 香港-自动
   - REJECT
 - name: 💬 通讯
   type: select
   proxies:
+  - 香港-自动
   - DIRECT
   - 所有-自动
   - 专线-自动
-  - 香港-自动
   - 台湾-自动
   - 美国-自动
   - 日本-自动
   - 新加坡-自动
-  - REJECT
-- name: 🕊️ 迅雷
-  type: select
-  proxies:
-  - DIRECT
-  - 专线-自动
-  - 香港-自动
-  - REJECT
-- name: 🗄️ 群晖
-  type: select
-  proxies:
-  - DIRECT
-  - 所有-自动
-  - 专线-自动
-  - 香港-自动
-  - 台湾-自动
-  - 美国-自动
-  - 日本-自动
-  - 新加坡-自动
-  - 其他-自动
   - REJECT
 - name: 🌍 国外
   type: select
   proxies:
-  - DIRECT
   - 所有-自动
+  - DIRECT
   - 专线-自动
   - 香港-自动
   - 台湾-自动
@@ -308,14 +281,11 @@ rules:
   - RULE-SET,AppleTV,🍎 Apple
   - RULE-SET,Microsoft,🪟 Microsoft
   - RULE-SET,TikTok,🎼 TikTok
-  - RULE-SET,Emby,❇️ Emby
   - RULE-SET,Line,💬 通讯
   - RULE-SET,Whatsapp,💬 通讯
   - RULE-SET,Facebook,💬 通讯
   - RULE-SET,Instagram,💬 通讯
   - RULE-SET,Threads,💬 通讯
-  - RULE-SET,Xunlei,🕊️ 迅雷
-  - RULE-SET,Synology,🗄️ 群晖
   - RULE-SET,LianduProxy,🌍 国外
   - RULE-SET,Global,🌍 国外
   - DOMAIN-SUFFIX,fscloud.app,🌍 国外
@@ -567,12 +537,6 @@ rule-providers:
     format: text
     interval: 86400
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list
-  Emby:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby.list
   Line:
     type: http
     behavior: classical
@@ -603,18 +567,6 @@ rule-providers:
     format: text
     interval: 86400
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Threads/Threads.list
-  Xunlei:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Xunlei/Xunlei.list
-  Synology:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Synology/Synology.list
   LianduProxy:
     type: http
     behavior: classical
